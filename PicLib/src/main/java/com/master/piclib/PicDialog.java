@@ -124,7 +124,8 @@ public class PicDialog extends BottomSheetDialogFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
-        if (parent != null)
+        if (parent != null && getContext().getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE)
             BottomSheetBehavior.from(parent.getRootView().findViewById(android.support.design.R.id.design_bottom_sheet)).setState(BottomSheetBehavior.STATE_EXPANDED);
 
     }
@@ -180,7 +181,7 @@ public class PicDialog extends BottomSheetDialogFragment implements View.OnClick
     public void onDestroy() {
         super.onDestroy();
         listener = null;
-        if(d!=null){
+        if (d != null) {
             d.dispose();
         }
     }
@@ -289,6 +290,12 @@ public class PicDialog extends BottomSheetDialogFragment implements View.OnClick
 //            intent.setAction(Intent.ACTION_GET_CONTENT);
 //            startActivityForResult(intent, 120);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("isshow", getDialog().isShowing());
     }
 
     /**

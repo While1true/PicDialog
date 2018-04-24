@@ -12,27 +12,42 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    private PicDialog picDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ImageView viewById = findViewById(R.id.image);
-        show(viewById);
+        show(viewById, savedInstanceState);
         viewById.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show(viewById);
+                picDialog.show(getSupportFragmentManager(), "PicDialog");
             }
         });
     }
 
-    private void show(final ImageView viewById) {
-        new PicDialog().setListener(new PicDialog.ResultListener() {
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (picDialog != null && picDialog.isAdded())
+            getSupportFragmentManager().putFragment(outState, "PicDialog", picDialog);
+    }
+
+    private void show(final ImageView viewById, Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            picDialog = (PicDialog) getSupportFragmentManager().getFragment(savedInstanceState, "PicDialog");
+        }
+        if (picDialog == null) {
+            picDialog = new PicDialog();
+        }
+        picDialog.setListener(new PicDialog.ResultListener() {
             @Override
             public void onResult(String result) {
-
                 viewById.setImageURI(Uri.fromFile(new File(result)));
             }
-        }).show(getSupportFragmentManager(),"xx");
+        });
+
     }
 }
