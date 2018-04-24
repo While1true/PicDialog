@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#fAFAFA</color>
+    <color name="light_grey">#BBBBBB</color>
+    <color name="navi_checked">#ff79C4A0</color>
+    <color name="navi_unchecked">#535353</color>
+</resources>
