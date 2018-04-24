@@ -177,8 +177,8 @@ public class PicDialog extends BottomSheetDialogFragment implements View.OnClick
 
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         listener = null;
         if(d!=null){
             d.dispose();
