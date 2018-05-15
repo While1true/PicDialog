@@ -56,7 +56,7 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class PicDialog extends BottomSheetDialogFragment implements View.OnClickListener {
-    public static String CAPTURE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/DCIM/Camera/";
+    public static String CAPTURE_PATH = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Camera/";
     public static int RECENT_SIZE = 20;
     RecyclerView recyclerview;
     private MyAdapter adapter;
@@ -224,7 +224,7 @@ public class PicDialog extends BottomSheetDialogFragment implements View.OnClick
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
 
-            filename = new SimpleDateFormat("yyyyMMdd-HHmmss", Locale.CHINA)
+            filename = "IMG_"+new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA)
                     .format(new Date()) + ".png";
             File file = new File(CAPTURE_PATH, filename);
             Uri fileUri = FileProvider7.getUriForFile(getContext(), file);
@@ -240,11 +240,11 @@ public class PicDialog extends BottomSheetDialogFragment implements View.OnClick
          * 来自照相机
          */
         if (requestCode == 110 && resultCode == RESULT_OK) {
-            if (data != null) {
-                Uri uri = data.getData();
-                filename = getFilePathFromContentUri(uri, getContext().getContentResolver());
+//             if (data != null) {
+//                 Uri uri = data.getData();
+//                 filename = getFilePathFromContentUri(uri, getContext().getContentResolver());
 
-            }
+//             }
             if (listener != null) {
                 listener.onResult(CAPTURE_PATH + filename);
             }
